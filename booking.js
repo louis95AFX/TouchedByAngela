@@ -9,15 +9,127 @@ function openModal(title, description, showHairstyles = false) {
         document.getElementById('hairstyleSelection').style.display = 'none';
     }
 }
+function openBrazilianHairModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceBrazilianHairModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('brazilianSelection').style.display = 'block';
+    } else {
+        document.getElementById('brazilianSelection').style.display = 'none';
+    }
+}
+
+function openGentsModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceGentsModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('gentsSelection').style.display = 'block';
+    } else {
+        document.getElementById('gentsSelection').style.display = 'none';
+    }
+}
+
+function openManicureModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceManicuresModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('ManicureSelection').style.display = 'block';
+    } else {
+        document.getElementById('ManicureSelection').style.display = 'none';
+    }
+}
+
+function openPedicureModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('servicePedicureModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('PedicureSelection').style.display = 'block';
+    } else {
+        document.getElementById('PedicureSelection').style.display = 'none';
+    }
+}
+
+function openNailsModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceNailsModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('NailsSelection').style.display = 'block';
+    } else {
+        document.getElementById('NailsSelection').style.display = 'none';
+    }
+}
+function openMakeupModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceMakeupModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('MakeupSelection').style.display = 'block';
+    } else {
+        document.getElementById('MakeupSelection').style.display = 'none';
+    }
+}
+
+function openEyelashModal(title, description, ShowService = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDescription').innerText = description;
+    document.getElementById('serviceEylashModal').style.display = 'block';
+
+    if (ShowService) {
+        document.getElementById('EyelashSelection').style.display = 'block';
+    } else {
+        document.getElementById('EyelashSelection').style.display = 'none';
+    }
+}
 
 function closeModal() {
     document.getElementById('serviceModal').style.display = 'none';
+    document.getElementById('serviceBrazilianHairModal').style.display = 'none';
+    document.getElementById('serviceGentsModal').style.display = 'none';
+    document.getElementById('serviceManicuresModal').style.display = 'none';
+    document.getElementById('servicePedicureModal').style.display = 'none';
+    document.getElementById('serviceNailsModal').style.display = 'none';
+    document.getElementById('serviceMakeupModal').style.display = 'none';
+    document.getElementById('serviceEylashModal').style.display = 'none';
+
+
     // Ensure the hairstyle selection is hidden when the modal is closed
     document.getElementById('hairstyleSelection').style.display = 'none';
+    document.getElementById('brazilianSelection').style.display = 'none';
+    document.getElementById('gentsSelection').style.display = 'none';
+    document.getElementById('ManicureSelection').style.display = 'none';
+    document.getElementById('PedicureSelection').style.display = 'none';
+    document.getElementById('NailsSelection').style.display = 'none';
+    document.getElementById('MakeupSelection').style.display = 'none';
+    document.getElementById('EyelashSelection').style.display = 'none';
+
+}
+function openSummaryModal() {
+    document.getElementById('summaryName').innerText = document.getElementById('name').value;
+    document.getElementById('summaryPhone').innerText = document.getElementById('phone').value;
+    document.getElementById('summaryEmail').innerText = document.getElementById('email').value;
+    document.getElementById('summaryService').innerText = document.getElementById('Make-up').value; // Change ID for different services
+    document.getElementById('summaryDate').innerText = document.getElementById('bookingDate').value;
+    document.getElementById('summaryTime').innerText = document.getElementById('bookingTime').value;
+
+    document.getElementById('bookingSummaryModal').style.display = "block";
 }
 
+function closeSummaryModal() {
+    document.getElementById('bookingSummaryModal').style.display = "none";
+}
 window.onclick = function(event) {
-    let modal = document.getElementById('serviceModal');
+    let modal = document.getElementById('serviceModal','serviceBrazilianHairModal');
     if (event.target === modal) {
         closeModal();
     }
@@ -159,28 +271,55 @@ function closeHairstyleModal() {
     document.getElementById('hairstylePreviewModal').style.display = 'none';
 }
 
-// Update this function to trigger the modal
+let hairstyleImages = {
+    'Straight back': ['TBA1.png', 'TBA1.png', 'TBA1.png'],
+    'Straight up': ['TBA2.png', 'TBA2.png'],
+    'Tribal braids': ['TBA3.png', 'TBA3.png', 'TBA3.png'],
+    'Twist Braid': ['TBA4.png', 'TBA4.png'],
+    'Boho Knotless': ['TBA9Boho.jpg', 'TBA10Boho.jpg', 'TBA11Boho.jpg', 'TBA12Boho.jpg', 
+        'TBA13Boho.jpg', 'TBA14Boho.jpg', 'TBA15Boho.jpg', 'TBA16Boho.jpg', 'TBA17BOho.jpg', 'TBA18Boho.jpg'],
+    'Knotless': ['TBA6.png', 'TBA6.png'],
+    'Braids': ['TBA7.png', 'TBA7.png']
+};
+
+let currentImages = [];
+let currentIndex = 0;
+
 document.getElementById('hairstyle').addEventListener('change', function () {
     let selectedHairstyle = this.value;
-    let imageSrc = ''; // Define image paths based on selection
-
-    switch (selectedHairstyle) {
-        case 'Straight back': imageSrc = 'TBA1.png'; break;
-        case 'Straight up': imageSrc = 'TBA2.png'; break;
-        case 'Tribal braids': imageSrc = 'TBA3.png'; break;
-        case 'Twist Braid': imageSrc = 'TBA4.png'; break;
-        case 'Boho Knotless': imageSrc = 'TBA5.png'; break;
-        case 'Knotless': imageSrc = 'TBA6.png'; break;
-        case 'Braids': imageSrc = 'TBA7.png'; break;
-        default: imageSrc = '';
-    }
-
-    if (imageSrc) {
-        showHairstyleImage(imageSrc, selectedHairstyle);
+    if (hairstyleImages[selectedHairstyle]) {
+        currentImages = hairstyleImages[selectedHairstyle];
+        currentIndex = 0;
+        showHairstyleImage(currentImages[currentIndex], selectedHairstyle);
     } else {
         closeHairstyleModal();
     }
 });
+
+function showHairstyleImage(imageSrc, title) {
+    document.getElementById('modalHairstyleImage').src = imageSrc;
+    document.getElementById('hairstyleTitle').textContent = title;
+    document.getElementById('hairstylePreviewModal').style.display = 'block';
+}
+
+function closeHairstyleModal() {
+    document.getElementById('hairstylePreviewModal').style.display = 'none';
+}
+
+function nextImage() {
+    if (currentImages.length > 1) {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
+    }
+}
+
+function prevImage() {
+    if (currentImages.length > 1) {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
+    }
+}
+
  // Time picker logic
  document.getElementById('bookingTime').addEventListener('change', function() {
     let selectedTime = this.value;
