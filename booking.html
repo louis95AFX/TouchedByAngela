@@ -13,9 +13,27 @@
 <body>
     <header>Touch By Angelia Salon 
         <div class="admin-container">
-            <i class="fas fa-user-cog admin-icon" onclick="openAdminPanel()"></i>
+            <i class="fas fa-user-cog admin-icon" onclick="openAdminModal()"></i>
         </div>
     </header>
+    
+   <!-- Modal -->
+   <div class="AdminModal" id="loginAdminModal">
+    <div class="AdminModal-content">
+      <button class="close-btn" onclick="closeAdminModal()">&times;</button>
+      <h2>Login</h2>
+      <div class="input-group">
+        <i class="fa fa-user"></i>
+        <input type="modaltext" id="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button class="login-btn" onclick="Adminlogin()">Login</button>
+    </div>
+  </div>
+
     <div class="container">
         <h2 style="text-align: center; color: #8A2BE2;">Our Services</h2>
         <div class="services">
@@ -124,107 +142,104 @@
                     <span id="price"></span>
                 </div>
 
-                    <!-- Hairstyle Selection -->
-                    <div class="mb-3" id="hairstyleSelection">
-                        <label for="hairstyle" class="form-label">Choose Hairstyle</label>
-                        <select id="hairstyle" class="form-select" onchange="showSizeAndLengthOptions();">
-                            <option value="" disabled selected>Select a hairstyle</option>
-                            <option value="Straight back">Straight back</option>
-                            <option value="Straight up">Straight up</option>
-                            <option value="Tribal braids">Tribal braids</option>
-                            <option value="Twist Braid">Twist Braid</option>
-                            <option value="Boho Knotless">Boho Knotless</option>
-                            <option value="Knotless">Knotless</option>
-                            <option value="Braids">Braids</option>
-                            <option value="Braids">Free Hand</option>
-                            <option value="Braids">Styling Gel</option>
-                            <option value="Braids">Locks</option>
-                        </select>
-                    </div>
+                      <!-- Hairstyle Selection -->
+<div class="mb-3" id="hairstyleSelection">
+    <label for="hairstyle" class="form-label">Choose Hairstyle</label>
+    <select id="hairstyle" class="form-select" onchange="showSizeAndLengthOptions(); showSelectionOptions();">
+        <option value="" disabled selected>Select a hairstyle</option>
+        <option value="Straight back">Straight back</option>
+        <option value="Straight up">Straight up</option>
+        <option value="Tribal braids">Tribal braids</option>
+        <option value="Twist Braid">Twist Braid</option>
+        <option value="Boho Knotless">Boho Knotless</option>
+        <option value="Knotless">Knotless</option>
+        <option value="Braids">Braids</option>
+        <option value="Free Hand">Free Hand</option>
+        <option value="Styling Gel">Styling Gel</option>
+        <option value="Locks">Locks</option>
+    </select>
+</div>
 
-                              <!-- Color Selection (Initially Hidden) -->
-                              <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose tribal type</label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected>Select tribal type</option>
-                                    <option value="black">Tribal with bonding</option>
-                                    <option value="brown">Tribal with curls</option>
-                                </select>
-                            </div> -->
+<!-- Tribal Selection -->
+<div class="mb-3" id="tribalSelection" style="display: none;">
+    <label for="tribal" class="form-label">Choose tribal type</label>
+    <select id="tribal" class="form-select">
+        <option value="" disabled selected>Select tribal type</option>
+        <option value="tribal_with_bonding">Tribal with bonding</option>
+        <option value="tribal_with_curls">Tribal with curls</option>
+    </select>
+</div>
 
-                                <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Braid type</label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Braid type</option>
-                                    <option value="black">Braids with curls at the end</option>
-                                    <option value="brown">Boho Braids</option>
-                                </select>
-                            </div> -->
-                            <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Straight back Type </label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Straight back type</option>
-                                    <option value="black">Straight back with curls at the end</option>
-                                    <option value="brown">Straight back with beads</option>
-                                    <option value="brown">Boho Straight back</option>
-                                </select>
-                            </div> -->
+<!-- Braids Selection -->
+<div class="mb-3" id="BraidsSelection" style="display: none;">
+    <label for="Braids" class="form-label">Choose Braid type</label>
+    <select id="Braids" class="form-select">
+        <option value="" disabled selected>Select Braid type</option>
+        <option value="Braids with curls at the end">Braids with curls at the end</option>
+        <option value="Boho Braids">Boho Braids</option>
+    </select>
+</div>
 
+<!-- Boho Selection (Straight back) -->
+<div class="mb-3" id="BohoSelection" style="display: none;">
+    <label for="Boho" class="form-label">Choose Straight back Type</label>
+    <select id="Boho" class="form-select">
+        <option value="" disabled selected>Select Straight back type</option>
+        <option value="Straight back with curls at the end">Straight back with curls at the end</option>
+        <option value="Straight back with beads">Straight back with beads</option>
+        <option value="Boho Straight back">Boho Straight back</option>
+    </select>
+</div>
 
-                            <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Twist type </label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Twist type</option>
-                                    <option value="black">Twist with curls at the end</option>
-                                    <option value="brown">Short boho twist </option>
-                                    <option value="brown">Long boho twist</option>
-                                    <option value="brown">Knotless Twist</option>
-                                    <option value="brown">Normal boho twist</option>
-                                </select>
-                            </div> -->
+<!-- Twist Selection -->
+<div class="mb-3" id="twistSelection" style="display: none;">
+    <label for="twist" class="form-label">Choose Twist type</label>
+    <select id="twist" class="form-select">
+        <option value="" disabled selected>Select Twist type</option>
+        <option value="Twist with curls at the end">Twist with curls at the end</option>
+        <option value="Short boho twist">Short boho twist</option>
+        <option value="Long boho twist">Long boho twist</option>
+        <option value="Knotless Twist">Knotless Twist</option>
+        <option value="Normal boho twist">Normal boho twist</option>
+    </select>
+</div>
 
-                            <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Hairpice </label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Hairpice</option>
-                                    <option value="black">1 million</option>
-                                    <option value="brown">xpression </option>
-                                    <option value="brown">brazilian wool</option>
-                                    <option value="brown">afro twist/kinky</option>
-                                </select>
-                            </div> -->
+<!-- Hairpice Selection (Visible only when Twist Braid is selected) -->
+<div class="mb-3" id="HairpiceSelection" style="display: none;">
+    <label for="Hairpice" class="form-label">Choose Hairpice</label>
+    <select id="Hairpice" class="form-select">
+        <option value="" disabled selected>Select Hairpice</option>
+        <option value="1 million">1 million</option>
+        <option value="xpression">xpression</option>
+        <option value="brazilian wool">brazilian wool</option>
+        <option value="afro twist/kinky">afro twist/kinky</option>
+    </select>
+</div>
 
-                            <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Free hand </label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Free Hand</option>
-                                    <option value="black">Straight up</option>
-                                    <option value="brown">Straight back </option>
-                                    <option value="brown">Fish bone</option>
-                                    <option value="brown">2 Straight up</option>
-                                </select>
-                            </div> -->
+                            <!-- Free Hand Selection (Visible only when "Free Hand" is selected) -->
+<div class="mb-3" id="FreeHandSelection" style="display: none;">
+    <label for="Free hand" class="form-label">Choose Free hand</label>
+    <select id="Free hand" class="form-select">
+        <option value="" disabled selected>Select Free Hand</option>
+        <option value="Straight up">Straight up</option>
+        <option value="Straight back">Straight back</option>
+        <option value="Fish bone">Fish bone</option>
+        <option value="2 Straight up">2 Straight up</option>
+    </select>
+</div>
                             
-                            <!-- <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose Hairpiece</label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select Hairpiece</option>
-                                    <option value="black">1 Million</option>
-                                    <option value="brown">Xpression</option>
-                                    <option value="brown">Curl Boning (not human or brazilian hair)</option>
-                                </select>
-                            </div> -->
 
-                            <div class="mb-3" id="colorSelection" style="display: none;">
-                                <label for="color" class="form-label">Choose locks type</label>
-                                <select id="color" class="form-select">
-                                    <option value="" disabled selected> Select locks </option>
-                                    <option value="black">Butterfly locks</option>
-                                    <option value="black">Butterfly Crochettes</option>
-                                    <option value="brown">Foax locks</option>
-                                    <option value="brown">Foax locks Crochettes</option>
-                                </select>
-                            </div>
+                           <!-- Locks Selection (Visible only when "Locks" is selected) -->
+<div class="mb-3" id="locksSelection" style="display: none;">
+    <label for="locks" class="form-label">Choose locks type</label>
+    <select id="locks" class="form-select">
+        <option value="" disabled selected>Select locks</option>
+        <option value="Butterfly locks">Butterfly locks</option>
+        <option value="Butterfly Crochettes">Butterfly Crochettes</option>
+        <option value="Foax locks">Foax locks</option>
+        <option value="Foax locks Crochettes">Foax locks Crochettes</option>
+    </select>
+</div>
 
                                 <!-- Color Selection (Initially Hidden) -->
                     <div class="mb-3" id="colorSelection" style="display: none;">
