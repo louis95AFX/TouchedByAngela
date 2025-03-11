@@ -397,3 +397,87 @@ document.getElementById("bookingForm").addEventListener("submit", async function
         document.getElementById("loadingOverlay").style.display = "none";
     }
 });
+
+// Open the modal
+function openAdminModal() {
+    document.getElementById('loginAdminModal').style.display = 'flex';
+  }
+
+  // Close the modal
+  function closeAdminModal() {
+    document.getElementById('loginAdminModal').style.display = 'none';
+  }
+
+  // Login function (you can replace this with your logic)
+  function Adminlogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+  
+    // Hardcoded username and password
+    const correctUsername = "admin";
+    const correctPassword = "password123"; // Replace with your actual password
+  
+    if (username === correctUsername && password === correctPassword) {
+      closeAdminModal();
+      // Redirect to admin.html
+      window.location.href = 'admin.html';
+    } else {
+      alert('Incorrect username or password');
+    }
+  }
+  // Function to show the appropriate selection options based on the hairstyle selected
+  function showSelectionOptions() {
+    const hairstyle = document.getElementById('hairstyle').value;
+    const tribalSelection = document.getElementById('tribalSelection');
+    const braidsSelection = document.getElementById('BraidsSelection');
+    const bohoSelection = document.getElementById('BohoSelection');
+    const twistSelection = document.getElementById('twistSelection');
+    const hairpiceSelection = document.getElementById('HairpiceSelection');
+    const freeHandSelection = document.getElementById('FreeHandSelection');
+    const locksSelection = document.getElementById('locksSelection');
+
+    // Show tribal selection if "Tribal braids" is selected
+    if (hairstyle === "Tribal braids") {
+        tribalSelection.style.display = 'block';
+    } else {
+        tribalSelection.style.display = 'none';
+    }
+    
+    // Show braids selection if "Braids" is selected
+    if (hairstyle === "Braids") {
+        braidsSelection.style.display = 'block';
+    } else {
+        braidsSelection.style.display = 'none';
+    }
+
+    // Show straight back selection if "Straight back" is selected
+    if (hairstyle === "Straight back") {
+        bohoSelection.style.display = 'block';
+    } else {
+        bohoSelection.style.display = 'none';
+    }
+
+    // Show twist selection if "Twist Braid" is selected
+    if (hairstyle === "Twist Braid") {
+        twistSelection.style.display = 'block';
+        hairpiceSelection.style.display = 'block'; // Show Hairpice selection when Twist Braid is selected
+    } else {
+        twistSelection.style.display = 'none';
+        hairpiceSelection.style.display = 'none'; // Hide Hairpice selection when Twist Braid is not selected
+    }
+    // Show Free Hand selection if "Free Hand" is selected
+    if (hairstyle === "Free Hand") {
+        freeHandSelection.style.display = 'block';
+    } else {
+        freeHandSelection.style.display = 'none';
+    }
+    // Show locks selection if "Locks" is selected
+    if (hairstyle === "Locks") {
+        locksSelection.style.display = 'block';
+    } else {
+        locksSelection.style.display = 'none';
+    }
+}
+
+// Initially run the function to handle default state
+showSelectionOptions();
