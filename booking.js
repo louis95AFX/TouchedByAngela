@@ -114,19 +114,15 @@ function closeModal() {
     document.getElementById('EyelashSelection').style.display = 'none';
 
 }
-function openSummaryModal() {
+function openPaymentModal() {
     document.getElementById('summaryName').innerText = document.getElementById('name').value;
     document.getElementById('summaryPhone').innerText = document.getElementById('phone').value;
     document.getElementById('summaryEmail').innerText = document.getElementById('email').value;
-    document.getElementById('summaryService').innerText = document.getElementById('Make-up').value; // Change ID for different services
-    document.getElementById('summaryDate').innerText = document.getElementById('bookingDate').value;
-    document.getElementById('summaryTime').innerText = document.getElementById('bookingTime').value;
-
-    document.getElementById('bookingSummaryModal').style.display = "block";
+    document.getElementById('PaymentModal').style.display = "block";
 }
 
-function closeSummaryModal() {
-    document.getElementById('bookingSummaryModal').style.display = "none";
+function closePaymentModal() {
+    document.getElementById('PaymentModal').style.display = "none";
 }
 window.onclick = function(event) {
     let modal = document.getElementById('serviceModal','serviceBrazilianHairModal');
@@ -351,23 +347,31 @@ document.getElementById('bookingDate').addEventListener('change', function() {
         selectedBookingDate.textContent = 'Selected Date: ' + selectedDate;
     }
 });
+document.addEventListener("DOMContentLoaded", function() {
+    // Ensure overlay is hidden when the page loads
+    document.getElementById("loadingOverlay").style.display = "none";
+});
 
 document.getElementById("bookingForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const formData = {
-    name: document.getElementById("name").value,
-    cell: document.getElementById("phone").value,  // Changed 'phone' to 'cell' to match the backend
-    email: document.getElementById("email").value,
-    date: document.getElementById("bookingDate").value,  // Changed 'bookingDate' to 'date'
-    time: document.getElementById("bookingTime").value,  // Changed 'bookingTime' to 'time'
-    hairstyle: document.getElementById("hairstyle").value,
-    length: document.getElementById("length").value,
-    size: document.getElementById("size").value,
-    color: document.getElementById("color").value,  // Capture selected color
-    approved: false // Default value for new bookings
-};
+    // Delay showing the overlay to ensure the DOM updates
+    setTimeout(() => {
+        document.getElementById("loadingOverlay").style.display = "flex";
+    }, 10);
 
+    const formData = {
+        name: document.getElementById("name").value,
+        cell: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        date: document.getElementById("bookingDate").value,
+        time: document.getElementById("bookingTime").value,
+        hairstyle: document.getElementById("hairstyle").value,
+        length: document.getElementById("length").value,
+        size: document.getElementById("size").value,
+        color: document.getElementById("color").value,
+        approved: false
+    };
 
     try {
         const response = await fetch("http://localhost:5000/book", {
@@ -382,11 +386,14 @@ document.getElementById("bookingForm").addEventListener("submit", async function
 
         if (response.ok) {
             alert(result.message);
-            document.getElementById("bookingForm").reset(); // Reset form after successful submission
+            document.getElementById("bookingForm").reset();
         } else {
             alert("Error: " + result.error);
         }
     } catch (error) {
         alert("Error saving booking");
+    } finally {
+        // Hide the loading overlay after response
+        document.getElementById("loadingOverlay").style.display = "none";
     }
 });
