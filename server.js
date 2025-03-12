@@ -3,6 +3,7 @@ const { Pool } = require("pg");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 const app = express();
 const pool = new Pool({
@@ -14,10 +15,16 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname)); // Serve static files from the current directory
+
+// Serve static files from the root directory (e.g., booking.html)
+app.use(express.static(path.join(__dirname)));
+
+// Route to serve booking.html when accessing the root URL
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "booking.html"));
+});
 
 // Test database connection
 pool
@@ -41,16 +48,11 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "louisphiri955@gmail.com", // Your Gmail
-    pass: "memd nauy jnmt nglw", // Generated App Password
+    pass: "memd nauy jnmt nglw", //  generated App Password
   },
 });
 
-// API root endpoint
-app.get("/", (req, res) => {
-  res.json({ message: "API is running!" });
-});
-
-// Booking endpoint
+// Endpoint to handle form submission
 app.post("/book", async (req, res) => {
   const { name, email, cell, hairstyle, size, length, color, date, time, approved } = req.body;
 
@@ -84,7 +86,8 @@ Thank you for booking with Touched by Angela! Here are your booking details:
 Your booking is ${approved ? "✅ Approved" : "⏳ Pending approval"}.
 
 Best regards,
-Touched by Angela Team`,
+Touched by Angela Team
+`,
     };
 
     // Send email notification
