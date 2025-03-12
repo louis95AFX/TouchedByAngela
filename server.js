@@ -17,7 +17,7 @@ const pool = new Pool({
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public")); // Serve static files from "public" folder
+app.use(express.static(__dirname)); // Serve static files from the current directory
 
 // Test database connection
 pool
