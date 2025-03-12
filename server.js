@@ -39,8 +39,18 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "louisphiri955@gmail.com", // Your Gmail
-    pass: "memd nauy jnmt nglw", //  generated App Password
+    pass: "memd nauy jnmt nglw", // Generated App Password
   },
+});
+
+// Default route for testing
+app.get("/", (req, res) => {
+  res.send("Welcome to Touched by Angela API!");
+});
+
+// API status check
+app.get("/api", (req, res) => {
+  res.json({ message: "API is running!" });
 });
 
 // Endpoint to handle form submission
@@ -97,8 +107,8 @@ Touched by Angela Team
   }
 });
 
-
-const PORT = process.env.PORT || 5000;
+// Use correct port from Render
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
