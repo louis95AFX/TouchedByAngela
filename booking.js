@@ -349,24 +349,37 @@ let hairstyleImages = {
         'Boho Straight back': ['sb4.jpg', 'sb7.jpg']
     },
     'Straight up': {
-    'default': ['TBA1.png', 'TBA2.png'],
-    'Kids straight up': ['sb15.jpg', 'sb17.jpg'],  // Make sure you have images for this option
-    'Adults straight up': ['sb15.jpg', 'sb17.jpg'] // Make sure you have images for this option
+    'default': ['stu1.jpg','stu2.jpg','stu3.jpg','stu4.jpg','stu5.jpg','stu6.jpg'],
+    'Kids straight up': ['kid5.jpg', 'kid1.jpg', 'kid3.jpg', 'kid2.jpg', 'kid4.jpg', 'kid6.jpg', 'kid7.jpg',
+         'kid8.jpg', 'kid9.jpg'], 
+    'Adult straight up': ['stu13.jpg','stu8.jpg','stu9.jpg','stu10.jpg','stu11.jpg','stu12.jpg'] 
     },
     'Tribal braids': {
-        'default': ['TBA3.png', 'TBA3.png']
+    'default': ['twc10.jpg', 'twc9.jpg'],
+    'Tribal with bonding': ['sb15.jpg', 'sb17.jpg'], 
+    'Tribal with curls': ['twc1.jpg', 'twc2.jpg', 'twc3.jpg', 'twc4.jpg', 'twc5.jpg', 'twc6.jpg', 'twc7.jpg', 
+        'twc8.jpg', 'twc9.jpg'] 
     },
     'Twist Braid': {
-        'default': ['TBA4.png', 'TBA4.png']
+        'default': ['TBA4.png', 'TBA4.png'],
+        'Twist with curls at the end': ['sb14.jpg', 'sb17.jpg'], 
+        'Short boho twist': ['st1.jpg', 'st2.jpg', 'st3.jpg', 'st4.jpg'],
+        'Long boho twist': ['sb13.jpg', 'sb17.jpg'] ,
+        'Knotless Twist': ['sb12.jpg', 'sb17.jpg'],
+        'Normal boho twist': ['sb11.jpg', 'sb17.jpg'] 
     },
     'Boho Knotless': {
-        'default': ['TBA9Boho.jpg', 'TBA10Boho.jpg']
+        'default': ['TBA9Boho.jpg', 'TBA10Boho.jpg'],
+     
     },
     'Knotless': {
-        'default': ['TBA6.png', 'TBA6.png']
+        'default': ['TBA6.png', 'TBA6.png'],
+       
     },
     'Braids': {
-        'default': ['TBA7.png', 'TBA7.png']
+        'default': ['TBA7.png', 'TBA7.png'],
+        'Braids with curls at the end': ['sb12.jpg', 'sb17.jpg'], 
+        'Boho Braids': ['sb15.jpg', 'sb17.jpg'] 
     }
 };
 
@@ -390,26 +403,35 @@ let currentIndex = 0;
 // Handle hairstyle selection
 document.getElementById('hairstyle').addEventListener('change', function () {
     let selectedHairstyle = this.value;
-    
+
     if (hairstyleImages[selectedHairstyle]) {
-        let defaultImages = hairstyleImages[selectedHairstyle]['default'];
+        let defaultImages = hairstyleImages[selectedHairstyle]['default'] || [];
         currentImages = defaultImages;
         currentIndex = 0;
-        showHairstyleImage(currentImages[currentIndex], selectedHairstyle);
-
-        // Show type dropdown for "Straight back" and "Straight up"
-        if (selectedHairstyle === "Straight back") {
-            document.getElementById('BohoSelection').style.display = "block"; // Show "Straight back" dropdown
-            document.getElementById('BohoupSelection').style.display = "none"; // Hide "Straight up" dropdown
-        } else if (selectedHairstyle === "Straight up") {
-            document.getElementById('BohoupSelection').style.display = "block"; // Show "Straight up" dropdown
-            document.getElementById('BohoSelection').style.display = "none"; // Hide "Straight back" dropdown
-        } else {
-            document.getElementById('BohoSelection').style.display = "none"; // Hide "Straight back" dropdown
-            document.getElementById('BohoupSelection').style.display = "none"; // Hide "Straight up" dropdown
-            document.getElementById('Boho').value = "default"; // Reset type selection
-            document.getElementById('Bohoup').value = "default"; // Reset "Straight up" type selection
+        if (currentImages.length > 0) {
+            showHairstyleImage(currentImages[currentIndex], selectedHairstyle);
         }
+
+        // Manage dropdown visibility dynamically
+        let dropdowns = {
+            "Straight back": 'BohoSelection',
+            "Straight up": 'BohoupSelection',
+            "Tribal braids": 'tribalSelection',
+            "Twist Braid" : 'twistSelection',
+            "Braids" : 'BraidsSelection'
+        };
+
+        Object.keys(dropdowns).forEach(key => {
+            document.getElementById(dropdowns[key]).style.display = key === selectedHairstyle ? "block" : "none";
+        });
+
+        // Reset values only if the dropdown is hidden
+        if (selectedHairstyle !== "Straight back") document.getElementById('Boho').value = "default";
+        if (selectedHairstyle !== "Straight up") document.getElementById('Bohoup').value = "default";
+        if (selectedHairstyle !== "Tribal braids") document.getElementById('tribal').value = "default";
+        if (selectedHairstyle !== "Twist Braid") document.getElementById('twist').value = "default";
+        if (selectedHairstyle !== "Braids") document.getElementById('Braids').value = "default";
+
     } else {
         closeHairstyleModal();
     }
@@ -420,7 +442,18 @@ document.getElementById('hairstyle').addEventListener('change', function () {
 document.getElementById('Boho').addEventListener('change', function () {
     updateImageAndPrice();
 });
-
+document.getElementById('Bohoup').addEventListener('change', function () {
+    updateImageAndPrice();
+});
+document.getElementById('tribal').addEventListener('change', function () {
+    updateImageAndPrice();
+});
+document.getElementById('twist').addEventListener('change', function () {
+    updateImageAndPrice();
+});
+document.getElementById('Braids').addEventListener('change', function () {
+    updateImageAndPrice();
+});
 // Handle size selection
 document.getElementById('size').addEventListener('change', function () {
     updateImageAndPrice();
@@ -429,22 +462,41 @@ document.getElementById('size').addEventListener('change', function () {
 // Function to update image & price
 function updateImageAndPrice() {
     let selectedHairstyle = document.getElementById('hairstyle').value;
-    let selectedType = document.getElementById('Boho').value;
+    
+    // Determine selected type based on which dropdown is visible
+    let selectedType = document.getElementById('BohoSelection').style.display === "block"
+    ? document.getElementById('Boho').value
+    : document.getElementById('BohoupSelection').style.display === "block"
+    ? document.getElementById('Bohoup').value
+    : document.getElementById('tribalSelection').style.display === "block"
+    ? document.getElementById('tribal').value
+    : document.getElementById('twistSelection').style.display === "block"
+    ? document.getElementById('twist').value
+    : document.getElementById('BraidsSelection').style.display === "block"
+    ? document.getElementById('Braids').value
+    : 'default';
+
+
     let selectedSize = document.getElementById('size').value;
 
-    // Update image
+    // Update image if available
     if (hairstyleImages[selectedHairstyle]) {
         currentImages = hairstyleImages[selectedHairstyle][selectedType] || hairstyleImages[selectedHairstyle]['default'];
-        currentIndex = 0; // Reset index when type changes
-        document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
+        if (currentImages.length > 0) {
+            currentIndex = 0; // Reset index when type changes
+            document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
+        }
     }
 
-    // Update price
+    // Update price if available
     if (pricing[selectedHairstyle] && pricing[selectedHairstyle][selectedType] && pricing[selectedHairstyle][selectedType][selectedSize]) {
         let price = pricing[selectedHairstyle][selectedType][selectedSize];
         document.getElementById('priceDisplay').textContent = "Price: R" + price;
+    } else {
+        document.getElementById('priceDisplay').textContent = "Price: N/A"; // Fallback if no price is found
     }
 }
+
 
 // Function to display image in modal
 function showHairstyleImage(imageSrc, title) {
