@@ -274,16 +274,17 @@
                     </select>
                     <p id="price" style="display:none;"></p>
                 </div>
-                <!-- Hairstyle Preview Modal -->
-                <div id="hairstylePreviewModal" class="hairstyle-modal">
-                    <span class="close" onclick="closeHairstyleModal()">&times;</span>
-                    <h5 id="hairstyleTitle">Selected Hairstyle</h5> <!-- Updated dynamically -->
-                    <div class="image-slider">
-                        <button class="prev" onclick="prevImage()">&#10094;</button>
-                        <img id="modalHairstyleImage" src="" alt="Hairstyle Preview">
-                        <button class="next" onclick="nextImage()">&#10095;</button>
-                    </div>
+              <!-- Hairstyle Preview Modal -->
+            <div id="hairstylePreviewModal" class="hairstyle-modal" onmousedown="dragMouseDown(event)">
+                <span class="close" onclick="closeHairstyleModal()">&times;</span>
+                <h5 id="hairstyleTitle">Selected Hairstyle</h5> <!-- Updated dynamically -->
+                <div class="image-slider">
+                    <button class="prev" onclick="prevImage()">&#10094;</button>
+                    <img id="modalHairstyleImage" src="" alt="Hairstyle Preview">
+                    <button class="next" onclick="nextImage()">&#10095;</button>
                 </div>
+            </div>
+
 
 
                 <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
