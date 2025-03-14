@@ -319,7 +319,7 @@ let hairstyleImages = {
     'Straight back': {
         'default': ['sb2.jpg'],
         'Straight back with curls at the end': ['sb15.jpg', 'sb17.jpg'],
-        'Straight back with beads': ['sb_beads1.jpg', 'sb_beads2.jpg'],
+        'Straight back with beads': ['sbwb1.jpg', 'sbwb2.jpg', 'sbwb3.jpg', 'sbwb4.jpg', 'sbwb5.jpg'],
         'Boho Straight back': ['sb4.jpg', 'sb7.jpg']
     },
     'Straight up': {
