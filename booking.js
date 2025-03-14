@@ -262,46 +262,168 @@ function showHairstyleImage(imageSrc, hairstyleName) {
         document.getElementById('hairstylePreviewModal').style.display = 'block';
     }
 }
+// Dragging functionality
+let isDragging = false;
+let offsetX, offsetY;
+
+function dragMouseDown(event) {
+    isDragging = true;
+    // Get the initial mouse position
+    offsetX = event.clientX - document.getElementById('hairstylePreviewModal').offsetLeft;
+    offsetY = event.clientY - document.getElementById('hairstylePreviewModal').offsetTop;
+    
+    // Attach mousemove and mouseup event listeners
+    document.addEventListener('mousemove', dragMouseMove);
+    document.addEventListener('mouseup', dragMouseUp);
+}
+
+function dragMouseMove(event) {
+    if (isDragging) {
+        // Calculate new position
+        const left = event.clientX - offsetX;
+        const top = event.clientY - offsetY;
+        
+        // Move the modal to the new position
+        document.getElementById('hairstylePreviewModal').style.left = left + 'px';
+        document.getElementById('hairstylePreviewModal').style.top = top + 'px';
+    }
+}
+
+function dragMouseUp() {
+    isDragging = false;
+    // Remove the event listeners once the drag is complete
+    document.removeEventListener('mousemove', dragMouseMove);
+    document.removeEventListener('mouseup', dragMouseUp);
+}
+
+// Show the modal with the image and title
+function showHairstyleImage(imageSrc, hairstyleName) {
+    if (imageSrc) {
+        document.getElementById('modalHairstyleImage').src = imageSrc;
+        document.getElementById('hairstyleTitle').innerText = hairstyleName; // Update the heading
+        document.getElementById('hairstylePreviewModal').style.display = 'block';
+    }
+}
+
+// Close the modal
+function closeHairstyleModal() {
+    document.getElementById('hairstylePreviewModal').style.display = 'none';
+}
+
 
 function closeHairstyleModal() {
     document.getElementById('hairstylePreviewModal').style.display = 'none';
 }
 
 let hairstyleImages = {
-    'Straight back': ['TBA1.png', 'TBA1.png', 'TBA1.png'],
-    'Straight up': ['TBA2.png', 'TBA2.png'],
-    'Tribal braids': ['TBA3.png', 'TBA3.png', 'TBA3.png'],
-    'Twist Braid': ['TBA4.png', 'TBA4.png'],
-    'Boho Knotless': ['TBA9Boho.jpg', 'TBA10Boho.jpg', 'TBA11Boho.jpg', 'TBA12Boho.jpg', 
-        'TBA13Boho.jpg', 'TBA14Boho.jpg', 'TBA15Boho.jpg', 'TBA16Boho.jpg', 'TBA17BOho.jpg', 'TBA18Boho.jpg'],
-    'Knotless': ['TBA6.png', 'TBA6.png'],
-    'Braids': ['TBA7.png', 'TBA7.png']
+    'Straight back': {
+        'default': ['sb2.jpg'],
+        'Straight back with curls at the end': ['sb15.jpg', 'sb17.jpg'],
+        'Straight back with beads': ['sb_beads1.jpg', 'sb_beads2.jpg'],
+        'Boho Straight back': ['sb4.jpg', 'sb7.jpg']
+    },
+    'Straight up': {
+        'default': ['TBA2.png', 'TBA2.png']
+    },
+    'Tribal braids': {
+        'default': ['TBA3.png', 'TBA3.png']
+    },
+    'Twist Braid': {
+        'default': ['TBA4.png', 'TBA4.png']
+    },
+    'Boho Knotless': {
+        'default': ['TBA9Boho.jpg', 'TBA10Boho.jpg']
+    },
+    'Knotless': {
+        'default': ['TBA6.png', 'TBA6.png']
+    },
+    'Braids': {
+        'default': ['TBA7.png', 'TBA7.png']
+    }
+};
+
+let pricing = {
+    "Boho Knotless": {
+        "Short (Shoulder length)": { "Big": 450, "Medium": 500, "Small": 550 },
+        "Medium (Back length)": { "Big": 550, "Medium": 650, "Small": 750 },
+        "Extra Long (Bum length)": { "Big": 650, "Medium": 750, "Small": 850 }
+    },
+    "Straight back": {
+        "Back length": { "Big": 270, "Medium": 310, "Small": 350 },
+        "Bum length": { "Big": 320, "Medium": 360, "Small": 400 },
+        "Back length + curls": { "Big": 370, "Medium": 410, "Small": 450 },
+        "Bum length + curls": { "Big": 380, "Medium": 420, "Small": 480 }
+    }
 };
 
 let currentImages = [];
 let currentIndex = 0;
 
+// Handle hairstyle selection
 document.getElementById('hairstyle').addEventListener('change', function () {
     let selectedHairstyle = this.value;
+    
     if (hairstyleImages[selectedHairstyle]) {
-        currentImages = hairstyleImages[selectedHairstyle];
+        let defaultImages = hairstyleImages[selectedHairstyle]['default'];
+        currentImages = defaultImages;
         currentIndex = 0;
         showHairstyleImage(currentImages[currentIndex], selectedHairstyle);
+
+        // Show type dropdown only for "Straight back"
+        if (selectedHairstyle === "Straight back") {
+            document.getElementById('BohoSelection').style.display = "block";
+        } else {
+            document.getElementById('BohoSelection').style.display = "none";
+            document.getElementById('Boho').value = "default"; // Reset type selection
+        }
     } else {
         closeHairstyleModal();
     }
 });
 
+// Handle type selection
+document.getElementById('Boho').addEventListener('change', function () {
+    updateImageAndPrice();
+});
+
+// Handle size selection
+document.getElementById('size').addEventListener('change', function () {
+    updateImageAndPrice();
+});
+
+// Function to update image & price
+function updateImageAndPrice() {
+    let selectedHairstyle = document.getElementById('hairstyle').value;
+    let selectedType = document.getElementById('Boho').value;
+    let selectedSize = document.getElementById('size').value;
+
+    // Update image
+    if (hairstyleImages[selectedHairstyle]) {
+        currentImages = hairstyleImages[selectedHairstyle][selectedType] || hairstyleImages[selectedHairstyle]['default'];
+        currentIndex = 0; // Reset index when type changes
+        document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
+    }
+
+    // Update price
+    if (pricing[selectedHairstyle] && pricing[selectedHairstyle][selectedType] && pricing[selectedHairstyle][selectedType][selectedSize]) {
+        let price = pricing[selectedHairstyle][selectedType][selectedSize];
+        document.getElementById('priceDisplay').textContent = "Price: R" + price;
+    }
+}
+
+// Function to display image in modal
 function showHairstyleImage(imageSrc, title) {
     document.getElementById('modalHairstyleImage').src = imageSrc;
     document.getElementById('hairstyleTitle').textContent = title;
     document.getElementById('hairstylePreviewModal').style.display = 'block';
 }
 
+// Function to close the modal
 function closeHairstyleModal() {
     document.getElementById('hairstylePreviewModal').style.display = 'none';
 }
 
+// Function to navigate images
 function nextImage() {
     if (currentImages.length > 1) {
         currentIndex = (currentIndex + 1) % currentImages.length;
@@ -315,6 +437,7 @@ function prevImage() {
         document.getElementById('modalHairstyleImage').src = currentImages[currentIndex];
     }
 }
+
 
  // Time picker logic
  document.getElementById('bookingTime').addEventListener('change', function() {
