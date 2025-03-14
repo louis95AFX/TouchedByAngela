@@ -266,35 +266,61 @@ function showHairstyleImage(imageSrc, hairstyleName) {
 let isDragging = false;
 let offsetX, offsetY;
 
-function dragMouseDown(event) {
+function dragStart(event) {
     isDragging = true;
-    // Get the initial mouse position
-    offsetX = event.clientX - document.getElementById('hairstylePreviewModal').offsetLeft;
-    offsetY = event.clientY - document.getElementById('hairstylePreviewModal').offsetTop;
     
-    // Attach mousemove and mouseup event listeners
-    document.addEventListener('mousemove', dragMouseMove);
-    document.addEventListener('mouseup', dragMouseUp);
+    // Check if it's a touch event
+    if (event.type === "touchstart") {
+        offsetX = event.touches[0].clientX - document.getElementById('hairstylePreviewModal').offsetLeft;
+        offsetY = event.touches[0].clientY - document.getElementById('hairstylePreviewModal').offsetTop;
+    } else {
+        offsetX = event.clientX - document.getElementById('hairstylePreviewModal').offsetLeft;
+        offsetY = event.clientY - document.getElementById('hairstylePreviewModal').offsetTop;
+    }
+
+    // Attach move and end event listeners
+    document.addEventListener('mousemove', dragMove);
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('touchmove', dragMove);
+    document.addEventListener('touchend', dragEnd);
 }
 
-function dragMouseMove(event) {
+function dragMove(event) {
     if (isDragging) {
+        let clientX, clientY;
+
+        // Check if it's a touch event
+        if (event.type === "touchmove") {
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+        } else {
+            clientX = event.clientX;
+            clientY = event.clientY;
+        }
+
         // Calculate new position
-        const left = event.clientX - offsetX;
-        const top = event.clientY - offsetY;
-        
+        const left = clientX - offsetX;
+        const top = clientY - offsetY;
+
         // Move the modal to the new position
         document.getElementById('hairstylePreviewModal').style.left = left + 'px';
         document.getElementById('hairstylePreviewModal').style.top = top + 'px';
     }
 }
 
-function dragMouseUp() {
+function dragEnd() {
     isDragging = false;
-    // Remove the event listeners once the drag is complete
-    document.removeEventListener('mousemove', dragMouseMove);
-    document.removeEventListener('mouseup', dragMouseUp);
+    // Remove event listeners once the drag is complete
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('mouseup', dragEnd);
+    document.removeEventListener('touchmove', dragMove);
+    document.removeEventListener('touchend', dragEnd);
 }
+
+// Attach event listeners to the modal header or drag area
+document.getElementById('hairstylePreviewModal').addEventListener('mousedown', dragStart);
+document.getElementById('hairstylePreviewModal').addEventListener('touchstart', dragStart);
+
 
 // Show the modal with the image and title
 function showHairstyleImage(imageSrc, hairstyleName) {
@@ -323,7 +349,9 @@ let hairstyleImages = {
         'Boho Straight back': ['sb4.jpg', 'sb7.jpg']
     },
     'Straight up': {
-        'default': ['TBA2.png', 'TBA2.png']
+    'default': ['TBA1.png', 'TBA2.png'],
+    'Kids straight up': ['sb15.jpg', 'sb17.jpg'],  // Make sure you have images for this option
+    'Adults straight up': ['sb15.jpg', 'sb17.jpg'] // Make sure you have images for this option
     },
     'Tribal braids': {
         'default': ['TBA3.png', 'TBA3.png']
@@ -369,17 +397,24 @@ document.getElementById('hairstyle').addEventListener('change', function () {
         currentIndex = 0;
         showHairstyleImage(currentImages[currentIndex], selectedHairstyle);
 
-        // Show type dropdown only for "Straight back"
+        // Show type dropdown for "Straight back" and "Straight up"
         if (selectedHairstyle === "Straight back") {
-            document.getElementById('BohoSelection').style.display = "block";
+            document.getElementById('BohoSelection').style.display = "block"; // Show "Straight back" dropdown
+            document.getElementById('BohoupSelection').style.display = "none"; // Hide "Straight up" dropdown
+        } else if (selectedHairstyle === "Straight up") {
+            document.getElementById('BohoupSelection').style.display = "block"; // Show "Straight up" dropdown
+            document.getElementById('BohoSelection').style.display = "none"; // Hide "Straight back" dropdown
         } else {
-            document.getElementById('BohoSelection').style.display = "none";
+            document.getElementById('BohoSelection').style.display = "none"; // Hide "Straight back" dropdown
+            document.getElementById('BohoupSelection').style.display = "none"; // Hide "Straight up" dropdown
             document.getElementById('Boho').value = "default"; // Reset type selection
+            document.getElementById('Bohoup').value = "default"; // Reset "Straight up" type selection
         }
     } else {
         closeHairstyleModal();
     }
 });
+
 
 // Handle type selection
 document.getElementById('Boho').addEventListener('change', function () {
@@ -554,6 +589,7 @@ function openAdminModal() {
     const tribalSelection = document.getElementById('tribalSelection');
     const braidsSelection = document.getElementById('BraidsSelection');
     const bohoSelection = document.getElementById('BohoSelection');
+    const bohoupSelection = document.getElementById('BohoupSelection');
     const twistSelection = document.getElementById('twistSelection');
     const hairpiceSelection = document.getElementById('HairpiceSelection');
     const freeHandSelection = document.getElementById('FreeHandSelection');
@@ -579,7 +615,11 @@ function openAdminModal() {
     } else {
         bohoSelection.style.display = 'none';
     }
-
+    if (hairstyle === "Straight up") {
+        bohoupSelection.style.display = 'block';
+    } else {
+        bohoupSelection.style.display = 'none';
+    }
     // Show twist selection if "Twist Braid" is selected
     if (hairstyle === "Twist Braid") {
         twistSelection.style.display = 'block';
