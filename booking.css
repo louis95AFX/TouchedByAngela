@@ -271,6 +271,8 @@ padding: 15px;
 text-align: center;
 display: none;
 z-index: 1000;
+box-shadow: 0 0 5px purple, 0 0 10px purple; /* Subtle purple glow */
+animation: pulseGlow 2s ease-in-out infinite; /* Pulsing effect for the entire modal */
 }
 
 .hairstyle-modal img {
@@ -471,4 +473,23 @@ animation: spin 1s linear infinite;
   .close-btn:hover {
     color: #ff4d4d;
   }
+
+/* Remove the thick border, but keep the draggable cursor */
+.hairstyle-modal .drag-handle {
+    cursor: move; /* Visual indicator it's draggable */
+    padding: 10px;
+}
+
+/* Keyframes for a more subtle pulsing glow effect */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 5px purple, 0 0 10px purple;
+    }
+    50% {
+        box-shadow: 0 0 10px purple, 0 0 15px purple;
+    }
+    100% {
+        box-shadow: 0 0 5px purple, 0 0 10px purple;
+    }
+}
 
