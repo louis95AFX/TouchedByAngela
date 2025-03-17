@@ -356,15 +356,16 @@ let hairstyleImages = {
     },
     'Tribal braids': {
     'default': ['twc10.jpg', 'twc9.jpg'],
-    'Tribal with bonding': ['sb15.jpg', 'sb17.jpg'], 
+    'Tribal with bonding': ['twb.jpg', 'twb1.jpg'], 
     'Tribal with curls': ['twc1.jpg', 'twc2.jpg', 'twc3.jpg', 'twc4.jpg', 'twc5.jpg', 'twc6.jpg', 'twc7.jpg', 
-        'twc8.jpg', 'twc9.jpg'] 
+        'twc8.jpg', 'twc9.jpg'] ,
+        'Tribal with twist': ['twt.jpg', 'twt1.jpg'] 
     },
     'Twist Braid': {
         'default': ['TBA4.png', 'TBA4.png'],
         'Twist with curls at the end': ['sb14.jpg', 'sb17.jpg'], 
-        'Short boho twist': ['st1.jpg', 'st2.jpg', 'st3.jpg', 'st4.jpg'],
-        'Long boho twist': ['sb13.jpg', 'sb17.jpg'] ,
+        'Short boho twist': ['st1.jpg', 'st2.jpg', 'st3.jpg', 'st4.jpg','st5.jpg'],
+        'Long boho twist': ['blt.jpg', 'blt1.jpg', 'blt2.jpg'] ,
         'Knotless Twist': ['sb12.jpg', 'sb17.jpg'],
         'Normal boho twist': ['sb11.jpg', 'sb17.jpg'] 
     },
