@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Touch By Angelia Salon</title>
+        <link rel="stylesheet" href="booking.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+             /* Gradient background style for the body */
+        body {
+            margin: 0;
+            height: 100vh; /* Ensure it covers the full screen */
+            background: linear-gradient(45deg, #6a0dad, #9b4f96, #4b0082, #800080, #a3a3c2);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite; /* Reduced time from 10s to 5s for faster transition */
+        }
+
+        /* Animation for smooth gradient transition */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Common alert styles */
+        .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Success alert specific style with purple and transparency */
+        .alert.success {
+            background-color: rgba(128, 0, 128, 0.7); /* Purple with 70% opacity */
+        }
+
+        /* Error alert specific style */
+        .alert.error {
+            background-color: red;
+        }
+
+        /* Fade-out effect after alert disappears */
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
+    </head>
+    
+<body>
+
+    <!-- Modal Structure -->
+    <div id="serviceBrazilianHairModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Brazilian Hair</h2>
+            <p id="modalDescription">We offer high-quality Brazilian hair for a natural look.</p>
+
+            <!-- Booking Form Starts Here -->
+            <form id="bookingForm2" class="p-4 border rounded bg-light shadow">
+                <!-- User Information -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Your Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Select Booking Date and Time -->
+                <div class="form-group">
+                    <label for="bookingDate">Select Booking Date:</label>
+                    <input type="date" id="bookingDate" name="bookingDate" class="form-control" required>
+                </div>
+
+                <!-- Select Booking Time -->
+                <div class="form-group">
+                    <label for="bookingTime">Select Booking Time:</label>
+                    <input type="time" id="bookingTime" name="bookingTime" class="form-control" required>
+                </div>
+
+                <!-- Brazilian Service Selection -->
+                <div class="mb-3" id="brazilianSelection">
+                    <label for="brazilian" class="form-label">Choose Service</label>
+                    <select id="brazilian" class="form-select" required>
+                        <option value="" disabled selected>Select Service</option>
+                        <option value="Wash">Wash - R100</option>
+                        <option value="Wash and Treat">Wash and Treat - R150</option>
+                        <option value="Wig Installation">Wig Installation - R250</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
+            </form>
+            <!-- Booking Form Ends Here -->
+        </div>
+    </div>
+    <!-- Loading overlay -->
+<div class="overlay" id="loadingOverlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
+
+    <script>
+        // Function to close the modal
+        function closeModal() {
+                document.getElementById('serviceBrazilianHairModal').style.display = 'none';
+                window.location.href = 'booking.html';
+            }
+        // Ensure the script runs after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure loading spinner is hidden on page load
+            document.getElementById('loadingOverlay').style.display = 'none';
+    
+            // Handle modal content if necessary
+            const title = sessionStorage.getItem('modalTitle');
+            const description = sessionStorage.getItem('modalDescription');
+            const showService = sessionStorage.getItem('showService') === 'true';
+    
+            if (title && description) {
+                document.getElementById('modalTitle').innerText = title;
+                document.getElementById('modalDescription').innerText = description;
+                document.getElementById('serviceBrazilianHairModal').style.display = 'block';
+    
+                // Show Brazilian service selection if showService is true
+                if (showService) {
+                    document.getElementById('brazilianSelection').style.display = 'block';
+                } else {
+                    document.getElementById('brazilianSelection').style.display = 'none';
+                }
+            }
+    
+            // Function to collect form data and send it to the backend
+            document.getElementById('bookingForm2').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+    
+                // Show loading overlay when form submission starts
+                document.getElementById('loadingOverlay').style.display = 'flex';
+    
+             
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    date: document.getElementById('bookingDate').value,
+                    time: document.getElementById('bookingTime').value,
+                    brazilian: document.getElementById('brazilian').value
+                };
+    
+                // Send data to the backend using fetch
+                fetch("http://localhost:5000/book", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set content-type to JSON
+                    },
+                    body: JSON.stringify(formData) // Convert the form data to JSON
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Show success alert
+
+                        alert("Booking sent");
+              
+                    setTimeout(() => {
+                    window.location.href = 'booking.html';
+                    }, 2000); // 2000 milliseconds = 2 seconds
+                    // Optionally, handle success response (show a message, close modal, etc.)
+                    closeModal();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Show error alert
+                    alert("Error saving booking");
+                })
+                .finally(() => {
+                    // Hide loading overlay once the request is completed
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                });
+            });
+        });
+    </script>
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
