@@ -195,7 +195,8 @@
     <select id="tribal" class="form-select">
         <option value="" disabled selected>Select tribal type</option>
         <option value="Tribal with bonding">Tribal with bonding</option>
-        <option value="Tribal with curls">Tribal with curls</option>
+        <option value="Tribal with curls">Tribal with curls</option> 
+        <option value="Tribal with twist">Tribal with twist</option>
     </select>
 </div>
 <!-- Twist Selection -->
@@ -292,403 +293,19 @@
                 </div>
             </div>
 
+            <button type="submit" class="btn btn-primary w-100" onclick="submitBookingForm('bookingForm1')">Book Appointment</button>
 
-
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
             </form>
             <!-- Booking Form Ends Here -->
         </div>
     </div>
+    
     <div class="overlay" id="loadingOverlay">
         <div class="spinner"></div>
     </div>
     
-    <!-- Service modal for Brazilian hair -->
-    <div id="serviceBrazilianHairModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Brazilian Hair</h2>
-            <p id="modalDescription">We offer high-quality Brazilian hair for a natural look.</p>
 
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Brazilian Service Selection -->
-                    <div class="mb-3" id="brazilianSelection">
-                        <label for="brazilian" class="form-label">Choose Service</label>
-                        <select id="brazilian" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="Wash and Treat">Wash - R100</option>
-                            <option value="Wash and Treat">Wash and Treat - R150</option>
-                            <option value="Wash and Treat">Wig Installation - R250</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-     <!-- Service modal for Gents hair-->
-     <div id="serviceGentsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Gents</h2>
-            <p id="modalDescription">We offer stylish and professional braiding services for men, including cornrows, twists, and intricate designs to match your style.</p>
-
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Gents Service Selection -->
-                    <div class="mb-3" id="gentsSelection">
-                        <label for="gents" class="form-label">Choose Service</label>
-                        <select id="gents" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="cornrows">Cornrows</option>
-                            <option value="Braid">Braid</option>
-                            <option value="Twist">Twist</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-    <!-- Service modal for manicure-->
-    <div id="serviceManicuresModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Manicure</h2>
-            <p id="modalDescription">Beautifully shaped and polished nails with high-quality products.</p>
-
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Gents Service Selection -->
-                    <div class="mb-3" id="ManicureSelection">
-                        <label for="Manicure" class="form-label">Choose Service</label>
-                        <select id="Manicure" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="cornrows">acrrr</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-     <!-- Service modal for pedicure-->
-     <div id="servicePedicureModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Pedicure</h2>
-            <p id="modalDescription">Relax with our luxurious pedicure treatments for healthy feet.</p>
-
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Gents Service Selection -->
-                    <div class="mb-3" id="PedicureSelection">
-                        <label for="Pedicure" class="form-label">Choose Service</label>
-                        <select id="Pedicure" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="Pedi">Pedi</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-    <!-- Service modal for Nails-->
-    <div id="serviceNailsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Nails</h2>
-            <p id="modalDescription">Acrylic, gel, and dip powder nails for a flawless look.</p>
-
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Gents Service Selection -->
-                    <div class="mb-3" id="NailsSelection">
-                        <label for="Nails" class="form-label">Choose Service</label>
-                        <select id="Nails" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="Nails">Nails</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-    <!-- Service modal for Make-up-->
-    <div id="serviceMakeupModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Make-up</h2>
-            <p id="modalDescription">Flawless make-up application for any occasion.</p>
-
-            <!-- Booking Form Starts Here -->
-            <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-                <!-- User Information -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Your Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-                </div>
-                <!-- Select Booking Date and Time -->
-                <div class="form-group">
-                    <label for="bookingDate">Select Booking Date:</label>
-                    <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-                </div>
-                <!-- Display Selected Date -->
-                <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-            <!-- Select Booking Time with Bootstrap -->
-            <div class="form-group">
-                <label for="bookingTime">Select Booking Time:</label>
-                <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-            </div>
-
-        <!-- Display Selected Time -->
-        <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-                  
-                    <!-- Gents Service Selection -->
-                    <div class="mb-3" id="MakeupSelection">
-                        <label for="Make-up" class="form-label">Choose Service</label>
-                        <select id="Make-up" class="form-select">
-                            <option value="" disabled selected>Select Service</option>
-                            <option value="Make-up">Make-up</option>
-                        </select>
-                    </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
-            </form>
-            <!-- Booking Form Ends Here -->
-        </div>
-    </div>
-
-<!-- Service modal for Make-up-->
-<div id="serviceEylashModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 id="modalTitle">Eyelash</h2>
-        <p id="modalDescription">Flawless make-up application for any occasion.</p>
-
-        <!-- Booking Form Starts Here -->
-        <form id="bookingForm" class="p-4 border rounded bg-light shadow">
-            <!-- User Information -->
-            <div class="mb-3">
-                <label for="name" class="form-label">Your Name</label>
-                <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label">Your Phone Number</label>
-                <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Your Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-            </div>
-            <!-- Select Booking Date and Time -->
-            <div class="form-group">
-                <label for="bookingDate">Select Booking Date:</label>
-                <input type="date" id="bookingDate" name="bookingDate" class="form-control col-sm-4" min="" />
-            </div>
-            <!-- Display Selected Date -->
-            <p id="selectedBookingDate" style="display:none;">Selected Date: </p>
-        <!-- Select Booking Time with Bootstrap -->
-        <div class="form-group">
-            <label for="bookingTime">Select Booking Time:</label>
-            <input type="time" id="bookingTime" name="bookingTime" class="form-control">
-        </div>
-
-    <!-- Display Selected Time -->
-    <p id="selectedBookingTime" style="display:none;">Selected Time: </p>
-              
-                <!-- Gents Service Selection -->
-                <div class="mb-3" id="EyelashSelection">
-                    <label for="Eyelash" class="form-label">Choose Service</label>
-                    <select id="Eyelash" class="form-select">
-                        <option value="" disabled selected>Select Service</option>
-                        <option value="Eyelash">Eyelash</option>
-                    </select>
-                </div>
-            
-<!-- Proceed with Booking Button -->
-<button type="button" class="btn btn-warning w-100 mt-3" onclick="openPaymentModal()">Proceed with Booking</button>
-
+    
 <!-- Booking Summary Modal -->
 <div id="PaymentModal" class="modal">
     <div class="modal-content">
@@ -743,13 +360,46 @@
                 </a>
             </p>
             <!-- Newsletter Subscription Form -->
-            <div class="newsletter mt-4">
-                <p>Subscribe to our Newsletter:</p>
-                <form action="YOUR_SERVER_ENDPOINT" method="POST" class="d-flex justify-content-center">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required style="max-width: 300px; border-radius: 25px; padding: 10px;">
-                    <button type="submit" class="btn btn-light" style="border-radius: 25px; padding: 10px 20px; margin-left: 10px;">Subscribe</button>
-                </form>
-            </div>
+<div class="newsletter mt-4">
+    <p>Subscribe to our Newsletter:</p>
+    <form id="newsletterForm" class="d-flex justify-content-center">
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required style="max-width: 300px; border-radius: 25px; padding: 10px;">
+        <button type="submit" class="btn btn-light" style="border-radius: 25px; padding: 10px 20px; margin-left: 10px;">Subscribe</button>
+    </form>
+    
+<p id="responseMessage" class="text-center mt-2"></p>
+
+<script>
+document.getElementById('newsletterForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    console.log("Email:", email);  // Log email to check if it's being retrieved correctly
+
+    if (!email) {
+        document.getElementById('responseMessage').textContent = "Email is required";
+        return;
+    }
+
+    fetch("http://localhost:5000/subscribe", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('responseMessage').textContent = data.message;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById('responseMessage').textContent = "Subscription failed. Please try again.";
+    });
+});
+
+</script>
+
         </div>
     </footer>
     <script src="booking.js"></script>
