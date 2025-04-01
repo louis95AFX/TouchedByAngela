@@ -10,86 +10,73 @@ function openModal(title, description, showHairstyles = false) {
     }
 }
 function openBrazilianHairModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceBrazilianHairModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('brazilianSelection').style.display = 'block';
-    } else {
-        document.getElementById('brazilianSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'brazilianHair.html';
 }
 
-function openGentsModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceGentsModal').style.display = 'block';
 
-    if (ShowService) {
-        document.getElementById('gentsSelection').style.display = 'block';
-    } else {
-        document.getElementById('gentsSelection').style.display = 'none';
-    }
+function openGentsModal(title, description, ShowService = false) {
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
+
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'gents.html';
 }
 
 function openManicureModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceManicuresModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('ManicureSelection').style.display = 'block';
-    } else {
-        document.getElementById('ManicureSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'manicure.html';
 }
 
 function openPedicureModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('servicePedicureModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('PedicureSelection').style.display = 'block';
-    } else {
-        document.getElementById('PedicureSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'pedicure.html';
 }
 
 function openNailsModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceNailsModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('NailsSelection').style.display = 'block';
-    } else {
-        document.getElementById('NailsSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'nails.html';
 }
 function openMakeupModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceMakeupModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('MakeupSelection').style.display = 'block';
-    } else {
-        document.getElementById('MakeupSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'makeup.html';
 }
 
 function openEyelashModal(title, description, ShowService = false) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDescription').innerText = description;
-    document.getElementById('serviceEylashModal').style.display = 'block';
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
 
-    if (ShowService) {
-        document.getElementById('EyelashSelection').style.display = 'block';
-    } else {
-        document.getElementById('EyelashSelection').style.display = 'none';
-    }
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'eyelash.html';
 }
 
 function closeModal() {
@@ -366,7 +353,7 @@ let hairstyleImages = {
         'Twist with curls at the end': ['sb14.jpg', 'sb17.jpg'], 
         'Short boho twist': ['st1.jpg', 'st2.jpg', 'st3.jpg', 'st4.jpg','st5.jpg'],
         'Long boho twist': ['blt.jpg', 'blt1.jpg', 'blt2.jpg'] ,
-        'Knotless Twist': ['sb12.jpg', 'sb17.jpg'],
+        'Knotless Twist': ['nt2.jpg', 'nt3.jpg' , 'nt1.jpg','nt.jpg'],
         'Normal boho twist': ['sb11.jpg', 'sb17.jpg'] 
     },
     'Boho Knotless': {
@@ -563,7 +550,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("loadingOverlay").style.display = "none";
 });
 
-document.getElementById("bookingForm").addEventListener("submit", async function(event) {
+function submitBookingForm() {
+    // Prevent form submission
     event.preventDefault();
 
     // Delay showing the overlay to ensure the DOM updates
@@ -579,11 +567,38 @@ document.getElementById("bookingForm").addEventListener("submit", async function
         time: document.getElementById("bookingTime").value,
         hairstyle: document.getElementById("hairstyle").value,
         length: document.getElementById("length").value,
-        size: document.getElementById("size").value,
+        size: document.getElementById("size") ? document.getElementById("size").value : "", // Ensure it exists
         color: document.getElementById("color").value,
+        braids: document.getElementById("Braids") ? document.getElementById("Braids").value : "",
+        boho: document.getElementById("Boho") ? document.getElementById("Boho").value : "",
+        bohoUp: document.getElementById("Bohoup") ? document.getElementById("Bohoup").value : "",
+        tribal: document.getElementById("tribal") ? document.getElementById("tribal").value : "",
+        twist: document.getElementById("twist") ? document.getElementById("twist").value : "",
+        hairpiece: document.getElementById("Hairpice") ? document.getElementById("Hairpice").value : "",
+        freeHand: document.getElementById("Free hand") ? document.getElementById("Free hand").value : "",
+        locks: document.getElementById("locks") ? document.getElementById("locks").value : "",
+        brazilian: document.getElementById("brazilian") ? document.getElementById("brazilian").value : "", // Added brazilian field
+        gents: document.getElementById("gents") ? document.getElementById("gents").value : "", // Added gents field
+        Manicure: document.getElementById("Manicure") ? document.getElementById("Manicure").value : "", // Added Manicure field
+        Pedicure: document.getElementById("Pedicure") ? document.getElementById("Pedicure").value : "", // Added Pedicure field
+        Nails: document.getElementById("Nails") ? document.getElementById("Nails").value : "", // Added Nails field
+        Makeup: document.getElementById("Make-up") ? document.getElementById("Make-up").value : "", // Added Makeup field
+        Eyelash: document.getElementById("Eyelash") ? document.getElementById("Eyelash").value : "", // Added Eyelash field
         approved: false
     };
 
+    // Send the form data to the server
+    sendBookingData(formData);
+}
+
+
+// Simulated function to send data
+function sendBookingData(data) {
+    console.log("Sending data to server:", data);
+    alert("Booking successful!");
+}
+
+async function sendBookingData(formData) {
     try {
         const response = await fetch("http://localhost:5000/book", {
             method: "POST",
@@ -607,7 +622,7 @@ document.getElementById("bookingForm").addEventListener("submit", async function
         // Hide the loading overlay after response
         document.getElementById("loadingOverlay").style.display = "none";
     }
-});
+}
 
 // Open the modal
 function openAdminModal() {
@@ -697,3 +712,4 @@ function openAdminModal() {
 
 // Initially run the function to handle default state
 showSelectionOptions();
+
