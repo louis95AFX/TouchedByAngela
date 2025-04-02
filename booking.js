@@ -155,7 +155,7 @@ function showSizeAndLengthOptions() {
 
     // Define length options for each hairstyle
     let lengthOptions = {
-        "Straight back": ["Back length", "Bum length", "Back length + curls", "Bum length + curls"],
+        "Straight back": ["Shoulder length", "Back length", "Bum length"],
         "Straight up": ["Back length", "Bum length", "Back length + curls","Bum length + curls"],
         "Tribal braids": ["Short (Shoulder length)", "Medium (Back length)","Extra Long (Bum length)"],
         "Twist Braid": ["Short (Shoulder length)", "Medium (Back length)", "Extra Long (Bum length)"],
