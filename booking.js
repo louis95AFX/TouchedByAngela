@@ -146,7 +146,7 @@ function showSizeAndLengthOptions() {
     let lengthDropdown = document.getElementById("length");
 
     // Show size and length options when a hairstyle is selected
-    sizeSelection.style.display = "block";
+    // sizeSelection.style.display = "block";
     lengthSelection.style.display = "block";
     colorSelection.style.display = "block";
 
@@ -185,15 +185,17 @@ function showSizeOptions() {
 
     sizeDropdown.innerHTML = '<option value="" disabled selected>Select a size</option>'; // Reset options
     priceDisplay.style.display = "none";  // Hide price tag initially
+    sizeSelection.style.display = "none";
 
     let pricing = {
         "Boho Knotless": {
             "Short (Shoulder length)":{ "Big": 450, "Medium": 500, "Small": 550 },
-            "Medium (Back length)": { "Big": 550, "Medium": 650, "Small": 750 },
-            "Extra Long (Bum length)": { "Big": 650, "Medium": 750, "Small": 850 }
+            "Medium (Back length)": { "Big": 650, "Medium": 750, "Small": 850 },
+            "Extra Long (Bum length)": { "Big": 750, "Medium": 850, "Small": 1000 }
+            
         },
         "Straight back": {
-            "Back length": { "Big": 270, "Medium": 310, "Small": 350 },
+            "Shoulder length": { "Big": 270, "Medium": 310, "Small": 350 },
             "Bum length": { "Big": 320, "Medium": 360, "Small": 400 },
             "Back length + curls": { "Big": 370, "Medium": 410, "Small": 450 },
             "Bum length + curls": { "Big": 380, "Medium": 420, "Small": 480 }
@@ -226,7 +228,7 @@ function showSizeOptions() {
         }
     };
 
-    if (pricing[hairstyle] && pricing[hairstyle][length]) {
+    if (hairstyle && length && pricing[hairstyle] && pricing[hairstyle][length]) {
         Object.keys(pricing[hairstyle][length]).forEach(size => {
             let option = document.createElement("option");
             option.value = size;
@@ -234,8 +236,6 @@ function showSizeOptions() {
             sizeDropdown.appendChild(option);
         });
         sizeSelection.style.display = "block";
-    } else {
-        sizeSelection.style.display = "none";
     }
 }
 function toggleDarkMode() {
@@ -343,29 +343,37 @@ let hairstyleImages = {
     },
     'Tribal braids': {
     'default': ['twc10.jpg', 'twc9.jpg'],
-    'Tribal with bonding': ['twb.jpg', 'twb1.jpg'], 
-    'Tribal with curls': ['twc1.jpg', 'twc2.jpg', 'twc3.jpg', 'twc4.jpg', 'twc5.jpg', 'twc6.jpg', 'twc7.jpg', 
-        'twc8.jpg', 'twc9.jpg'] ,
-        'Tribal with twist': ['twt.jpg', 'twt1.jpg'] 
+    'Tribal with bonding': ['twb2.jpg'], 
+    'Tribal with curls': ['tbwc1.jpg'] ,
+
+     'Tribal with curls at the end': ['TBA4.png'] ,
+
+    'Tribal with twist': ['twt.jpg', 'twt1.jpg'],
+
+    'boho tribal with beads': ['btwb1.jpg'],
+    'Tribal braids with passion twist': ['tbwpt1.jpg'] 
+
+
+
     },
     'Twist Braid': {
-        'default': ['TBA4.png', 'TBA4.png'],
+        'default': ['tb101.jpg', 'tb102.jpg'],
         'Twist with curls at the end': ['sb14.jpg', 'sb17.jpg'], 
-        'Short boho twist': ['st1.jpg', 'st2.jpg', 'st3.jpg', 'st4.jpg','st5.jpg'],
+        'Short boho twist': ['sbt1.jpg'],
         'Long boho twist': ['blt.jpg', 'blt1.jpg', 'blt2.jpg'] ,
         'Knotless Twist': ['nt2.jpg', 'nt3.jpg' , 'nt1.jpg','nt.jpg'],
         'Normal boho twist': ['sb11.jpg', 'sb17.jpg'] 
     },
     'Boho Knotless': {
-        'default': ['TBA9Boho.jpg', 'TBA10Boho.jpg'],
+        'default': ['TBA7.png'],
      
     },
     'Knotless': {
-        'default': ['TBA6.png', 'TBA6.png'],
+        'default': ['TBA6.png', 'TBA10Boho.jpg'],
        
     },
     'Braids': {
-        'default': ['TBA7.png', 'TBA7.png'],
+        'default': ['TBA43347.png', 'TBAewew7.png'],
         'Braids with curls at the end': ['sb12.jpg', 'sb17.jpg'], 
         'Boho Braids': ['sb15.jpg', 'sb17.jpg'] 
     }
@@ -600,7 +608,7 @@ function sendBookingData(data) {
 
 async function sendBookingData(formData) {
     try {
-        const response = await fetch("https://touchedbyangela.onrender.com/book", {
+        const response = await fetch("http://localhost:5000/book", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
