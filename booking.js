@@ -223,7 +223,7 @@ function showSizeOptions() {
         },
         "Braids": {
             "Short (Shoulder length)":{ "Big": 400, "Medium": 450, "Small": 500 },
-            "Medium (Back length)": { "Big": 500, "Medium": 550, "Small": 600 },
+            "Medium (Back length)": { "Big": 500, "Medium": 600, "Small": 700 },
             "Extra Long (Bum length)": { "Big": 600, "Medium": 700, "Small": 800 }
         }
     };
