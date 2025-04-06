@@ -373,7 +373,7 @@ let hairstyleImages = {
        
     },
     'Braids': {
-        'default': ['Braid101.jpg'],
+        'default': ['b101.jpg'],
         'Braids with curls at the end': ['sb12.jpg', 'sb17.jpg'], 
         'Boho Braids': ['sb15.jpg', 'sb17.jpg'] 
     }
