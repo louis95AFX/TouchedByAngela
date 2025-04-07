@@ -162,7 +162,7 @@ Touched by Angela Team
     // Email content for admin
     const adminMailOptions = {
       from: "louisphiri955@gmail.com",
-      to: "angeliabnsalon@gmail.com", // Sending to the admin
+      to: "carterprince95@gmail.com", // Sending to the admin
       subject: "New Booking Notification - Touched by Angela",
       text: `Hello Angela,
 
