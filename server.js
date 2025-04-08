@@ -213,6 +213,44 @@ Touched by Angela System
     res.status(500).json({ error: "Error saving booking" });
   }
 });
+app.post('/approve-booking', async (req, res) => {
+  const { bookingId } = req.body;  // Get booking ID from the request body
+
+  try {
+      // Get user details from the database
+      const result = await pool.query('SELECT email, name FROM "Touched_by_angela"."bookings" WHERE id = $1', [bookingId]);
+      if (result.rows.length === 0) {
+          return res.status(404).send({ message: 'Booking not found' });
+      }
+      
+      const { email, name } = result.rows[0];
+
+      // Update the booking status to approved
+      await pool.query('UPDATE "Touched_by_angela"."bookings" SET approved = TRUE WHERE id = $1', [bookingId]);
+
+      // Send approval email
+      const mailOptions = {
+          from: 'angeb65616@gmail.com',
+          to: email,
+          subject: 'Booking Approved ✅',
+          text: `Dear ${name},\n\nYour booking has been successfully approved! 🎉\nWe look forward to seeing you.\n\nBest Regards,\nTouched by Angelia`
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.error('Error sending email:', error);
+          } else {
+              console.log('Email sent:', info.response);
+          }
+      });
+
+      res.status(200).send({ message: 'Booking approved and email sent' });
+  } catch (err) {
+      console.error('Error approving booking:', err);
+      res.status(500).send({ message: 'Failed to approve booking' });
+  }
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
