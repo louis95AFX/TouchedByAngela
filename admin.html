@@ -359,7 +359,7 @@
           document.getElementById("loading").style.display = "block";
   
           // Fetch bookings from the backend running on port 5000
-          fetch("http://localhost:5000/bookings")
+          fetch("https://touchedbyangela.onrender.com/bookings")
               .then(response => {
                   if (!response.ok) return response.text().then(msg => { throw new Error(msg); });
                   return response.json();
@@ -482,7 +482,7 @@
         document.getElementById("loading").style.display = "block";
 
         // Send POST request to approve the booking
-        fetch('http://localhost:5000/approve-booking', {
+        fetch('https://touchedbyangela.onrender.com/approve-booking', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
