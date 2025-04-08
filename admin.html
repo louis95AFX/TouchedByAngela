@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Bookings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #6a0dad;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Navbar styles */
+    nav {
+      background-color: #6a0dad;
+      padding: 10px 20px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      background-color: #5a009e;
+      border-radius: 5px;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 5px;
+      font-size: 16px;
+      margin-left: 10px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #6a0dad;
+    }
+     /* Pagination styling */
+     .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination button, .pagination span {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      background-color: #6a0dad;
+      color: white;
+      cursor: pointer;
+    }
+
+    .pagination button.disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    .pagination button:hover {
+      background-color: #9b34eb;
+    }
+
+    .pagination span {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .pagination span.active {
+      background-color: #9b34eb;
+      color: white;
+    }
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #6a0dad;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    .status {
+      font-weight: bold;
+      color: green;
+    }
+
+    .status.pending {
+      color: orange;
+    }
+
+    /* Error message styling */
+    #bookingError {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+     /* Loading spinner */
+    #loading {
+      display: none;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    /* Using a simple CSS-based spinner */
+    #loading:before {
+      content: '';
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 4px solid transparent;
+      border-top: 4px solid #6a0dad;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+     /* Styling the approval button */
+     .approve-btn {
+      padding: 5px 10px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .approve-btn.pending {
+      background-color: #ffc107;
+    }
+
+    .approve-btn:hover {
+      background-color: #218838;
+    }
+
+    .approve-btn.pending:hover {
+      background-color: #e0a800;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h2>Admin - Bookings</h2>
+    <div class="search-container">
+      <label for="searchInput" style="color: white;">Search:</label>
+      <input id="searchInput" class="search-input" type="text" placeholder="Search by name..." />
+    </div>
+  </nav>
+
+  <div id="bookingError"></div>
+  <div id="bookingList"></div>
+  <div id="loading">
+    <!-- Simple CSS-based spinner will be used if image fails -->
+    <p>Loading data...</p>
+  </div>
+  <div class="pagination" id="paginationControls"></div>
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Bookings</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+  
+      h1 {
+        color: #6a0dad;
+        text-align: center;
+      }
+  
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+  
+      table, th, td {
+        border: 1px solid #ddd;
+      }
+  
+      th, td {
+        padding: 12px;
+        text-align: left;
+      }
+  
+      th {
+        background-color: #6a0dad;
+        color: white;
+      }
+  
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+  
+      tr:hover {
+        background-color: #ddd;
+      }
+  
+      .status {
+        font-weight: bold;
+        color: green;
+      }
+  
+      .status.pending {
+        color: orange;
+      }
+  
+      /* Pagination styling */
+      .pagination {
+        text-align: center;
+        margin-top: 20px;
+      }
+  
+      .pagination button, .pagination span {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        background-color: #6a0dad;
+        color: white;
+        cursor: pointer;
+      }
+  
+      .pagination button.disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+  
+      .pagination button:hover {
+        background-color: #9b34eb;
+      }
+  
+      .pagination span {
+        cursor: pointer;
+        font-weight: bold;
+      }
+  
+      .pagination span.active {
+        background-color: #9b34eb;
+        color: white;
+      }
+  
+      /* Loading spinner */
+      #loading {
+        display: none;
+        text-align: center;
+        font-size: 20px;
+        margin-top: 20px;
+      }
+  
+      /* Using a simple CSS-based spinner */
+      #loading:before {
+        content: '';
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 4px solid transparent;
+        border-top: 4px solid #6a0dad;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+  
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+  
+      /* Styling the approval button */
+      .approve-btn {
+        padding: 5px 10px;
+        border: none;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+  
+      .approve-btn.pending {
+        background-color: #ffc107;
+      }
+  
+      .approve-btn:hover {
+        background-color: #218838;
+      }
+  
+      .approve-btn.pending:hover {
+        background-color: #e0a800;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bookingError" style="color: red; font-weight: bold;"></div>
+    <div id="loading">
+      <!-- Simple CSS-based spinner will be used if image fails -->
+      <p>Loading data...</p>
+    </div>
+    <div id="bookingList"></div>
+  
+    <div class="pagination" id="paginationControls"></div>
+  
+    <script>
+      let allBookings = [];
+      let currentPage = 1;
+      const bookingsPerPage = 10;
+  
+      document.addEventListener("DOMContentLoaded", () => {
+          // Show loading spinner while fetching data
+          document.getElementById("loading").style.display = "block";
+  
+          // Fetch bookings from the backend running on port 5000
+          fetch("http://localhost:5000/bookings")
+              .then(response => {
+                  if (!response.ok) return response.text().then(msg => { throw new Error(msg); });
+                  return response.json();
+              })
+              .then(data => {
+                  console.log("Bookings fetched:", data);
+                  allBookings = data;  // Save the bookings globally for filtering
+                  displayBookings(allBookings);  // Display all bookings initially
+                  setupPagination(allBookings.length);  // Setup pagination based on total bookings
+                  document.getElementById("loading").style.display = "none";  // Hide loading spinner after data load
+              })
+              .catch(error => {
+                  console.error("Error fetching bookings:", error);
+                  const errorDiv = document.getElementById("bookingError");
+                  if (errorDiv) errorDiv.textContent = "Error fetching bookings. Please try again later.";
+                  document.getElementById("loading").style.display = "none";  // Hide loading spinner if error
+              });
+  
+          // Search input filter
+          const searchInput = document.getElementById('searchInput');
+          searchInput.addEventListener('input', () => {
+              filterBookings(searchInput.value);
+          });
+      });
+  
+      function displayBookings(bookings) {
+          const container = document.getElementById("bookingList");
+          if (!container) return;
+  
+          const start = (currentPage - 1) * bookingsPerPage;
+          const end = currentPage * bookingsPerPage;
+          const currentBookings = bookings.slice(start, end);
+  
+          if (currentBookings.length === 0) {
+              container.innerHTML = "<p>No bookings found.</p>";
+              return;
+          }
+  
+          const table = document.createElement("table");
+          table.innerHTML = `
+              <thead>
+                  <tr>
+                      <th>Client Name</th>
+                      <th>Client Email</th>
+                      <th>Booking Date</th>
+                      <th>Booking Time</th>
+                      <th>Hairstyle</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  ${currentBookings.map(booking => `
+                      <tr>
+                          <td>${booking.name}</td>
+                          <td>${booking.email}</td>
+                          <td>${formatDate(booking.date) || "—"}</td> <!-- Use the formatDate function here -->
+                          <td>${booking.time || "—"}</td>
+                          <td>${booking.hairstyle || "—"}</td>
+                          <td>
+                              <button 
+                                  class="approve-btn ${booking.approved ? '' : 'pending'}"
+                                  onclick="toggleApproval(${booking.id})">
+                                  ${booking.approved ? 'Approved' : 'Pending'}
+                              </button>
+                          </td>
+                      </tr>
+                  `).join("")}
+              </tbody>
+          `;
+          container.innerHTML = "";
+          container.appendChild(table);
+      }
+  
+      function setupPagination(totalBookings) {
+          const totalPages = Math.ceil(totalBookings / bookingsPerPage);
+          const paginationControls = document.getElementById("paginationControls");
+          paginationControls.innerHTML = "";
+  
+          // Show page numbers dynamically
+          for (let i = 1; i <= totalPages; i++) {
+              const pageButton = document.createElement("span");
+              pageButton.textContent = i;
+              pageButton.classList.add("pagination-page");
+              if (i === currentPage) {
+                  pageButton.classList.add("active");
+              }
+  
+              pageButton.addEventListener("click", () => {
+                  currentPage = i;
+                  displayBookings(allBookings);
+                  setupPagination(totalBookings);  // Update pagination controls
+              });
+  
+              paginationControls.appendChild(pageButton);
+          }
+      }
+  
+      function filterBookings(query) {
+          console.log("Filtering bookings with query:", query);
+  
+          const filteredBookings = allBookings.filter(booking => {
+              if (booking.name && typeof booking.name === "string") {
+                  return booking.name.toLowerCase().includes(query.toLowerCase());
+              }
+              return false;
+          });
+  
+          console.log("Filtered bookings:", filteredBookings);
+  
+          currentPage = 1;
+          displayBookings(filteredBookings);
+          setupPagination(filteredBookings.length);
+      }
+  
+      // Toggle the approval status of a booking
+      function toggleApproval(id) {
+    const booking = allBookings.find(b => b.id === id);
+    if (booking) {
+        // Show the loading spinner
+        document.getElementById("loading").style.display = "block";
+
+        // Send POST request to approve the booking
+        fetch('http://localhost:5000/approve-booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ bookingId: id }),  // Send the booking ID in the request body
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide the loading spinner once the request is finished
+            document.getElementById("loading").style.display = "none";
+
+            if (data.message === 'Booking approved and email sent') {
+                booking.approved = true;  // Update the local booking status
+                displayBookings(allBookings);  // Re-render the table
+                alert('Booking approved and email sent!');
+            } else {
+                alert('Failed to approve booking');
+            }
+        })
+        .catch(error => {
+            // Hide the loading spinner in case of error
+            document.getElementById("loading").style.display = "none";
+
+            console.error('Error approving booking:', error);
+            alert('An error occurred while approving the booking');
+        });
+    }
+}
+
+  
+      // Helper function to format the date in words
+      function formatDate(dateString) {
+          if (!dateString) return "";
+  
+          const date = new Date(dateString);
+  
+          // Define options for the date formatting
+          const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  
+          // Use Intl.DateTimeFormat to format the date
+          const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  
+          return formattedDate;  // This will return the date in the format "Month Day, Year" (e.g., "April 8, 2025")
+      }
+  </script>
+  
+  </body>
+  </html>
+  
+  
+</body>
+</html>
