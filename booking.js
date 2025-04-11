@@ -78,6 +78,16 @@ function openEyelashModal(title, description, ShowService = false) {
     // Redirect to the new page (e.g., 'newPage.html')
     window.location.href = 'eyelash.html';
 }
+function openDressModal(title, description, ShowService = false) {
+    // Save the necessary data in sessionStorage (or pass via URL parameters)
+    sessionStorage.setItem('modalTitle', title);
+    sessionStorage.setItem('modalDescription', description);
+    sessionStorage.setItem('showService', ShowService);
+
+    // Redirect to the new page (e.g., 'newPage.html')
+    window.location.href = 'dresses.html';
+}
+
 
 function closeModal() {
     document.getElementById('serviceModal').style.display = 'none';
