@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Touch By Angelia Salon</title>
+        <link rel="stylesheet" href="booking.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+             /* Gradient background style for the body */
+        body {
+            margin: 0;
+            height: 100vh; /* Ensure it covers the full screen */
+            background: linear-gradient(45deg, #6a0dad, #9b4f96, #4b0082, #800080, #a3a3c2);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite; /* Reduced time from 10s to 5s for faster transition */
+        }
+
+        /* Animation for smooth gradient transition */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Common alert styles */
+        .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Success alert specific style with purple and transparency */
+        .alert.success {
+            background-color: rgba(128, 0, 128, 0.7); /* Purple with 70% opacity */
+        }
+
+        /* Error alert specific style */
+        .alert.error {
+            background-color: red;
+        }
+
+        /* Fade-out effect after alert disappears */
+        .fade-out {
+            opacity: 0;
+        }
+        /* CSS for custom modal size */
+.custom-modal {
+    width: 60%; /* Adjust width as needed */
+    max-width: 350px; /* Maximum width */
+    height: auto; /* Adjust height automatically */
+    max-height: 70vh; /* Maximum height as 80% of the viewport height */
+    margin: auto; /* Center the modal */
+    padding: 2px; /* Add padding inside the modal */
+    background-color: white; /* Background color */
+    border-radius: 10px; /* Rounded corners */
+}
+/* Pulse effect border */
+.custom-modal::before {
+    content: "";
+    position: absolute;
+    top: -2px; /* Reduced thickness */
+    left: -2px; /* Reduced thickness */
+    right: -2px; /* Reduced thickness */
+    bottom: -2px; /* Reduced thickness */
+    z-index: -1;
+    background: linear-gradient(270deg, 
+        #c084fc, #a855f7, #9333ea, #7e22ce, #6b21a8, #9333ea, #a855f7, #c084fc);
+    background-size: 300% 300%;
+    animation: pulseBorder 2s ease-in-out infinite;
+    border-radius: 16px;
+}
+
+/* Pulse animation: Border scales in and out */
+@keyframes pulseBorder {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1); /* Slightly increase size */
+    }
+    100% {
+        transform: scale(1); /* Return to original size */
+    }
+}
+
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+}
+
+.custom-modal img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+    </style>
+    </head>
+    
+<body>
+
+   <!-- Service modal for Make-up-->
+<div id="serviceDressModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Make-up</h2>
+        <p id="modalDescription">Elegant, stylish, and flattering dresses perfect for any special occasion or celebration. Find the look that makes you shine.</p>
+    
+            <!-- Booking Form Starts Here -->
+            <form id="bookingForm9" class="p-4 border rounded bg-light shadow">
+                <!-- User Information -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Your Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                 <!-- Dress Selection Dropdown -->
+                <div class="mb-3" id="DressSelection">
+                    <label for="Dress" class="form-label">Choose Dress</label>
+                    <select id="Dress" class="form-select" onchange="showDressModal(this.value)">
+                        <option value="" disabled selected>Select Dress</option>
+                        <option value="dress1">Dress 1</option>
+                        <option value="dress2">Dress 2</option>
+                        <option value="dress3">Dress 3</option>
+                        <option value="dress4">Dress 4</option>
+                    </select>
+                </div>
+
+                <!-- Dress Modal -->
+                <!-- Dress Modal -->
+<div id="dressModal" class="custom-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000; cursor:move;">
+    <span onclick="closeDressModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
+    <img id="dressImage" src="" alt="Selected Dress" style="width:100%; height:auto; border-radius:10px;">
+</div>
+
+                <button type="submit" class="btn btn-primary w-100">Order Dress</button>
+            </form>
+            <!-- Booking Form Ends Here -->
+        </div>
+    </div>
+    <!-- Loading overlay -->
+<div class="overlay" id="loadingOverlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
+
+    <script>
+        // Function to close the modal
+        function closeModal() {
+                document.getElementById('serviceDressModal').style.display = 'none';
+                window.location.href = 'booking.html';
+            }
+        // Ensure the script runs after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure loading spinner is hidden on page load
+            document.getElementById('loadingOverlay').style.display = 'none';
+    
+            // Handle modal content if necessary
+            const title = sessionStorage.getItem('modalTitle');
+            const description = sessionStorage.getItem('modalDescription');
+            const showService = sessionStorage.getItem('showService') === 'true';
+    
+            if (title && description) {
+                document.getElementById('modalTitle').innerText = title;
+                document.getElementById('modalDescription').innerText = description;
+                document.getElementById('serviceDressModal').style.display = 'block';
+    
+                // Show Brazilian service selection if showService is true
+                if (showService) {
+                    document.getElementById('DressSelection').style.display = 'block';
+                } else {
+                    document.getElementById('DressSelection').style.display = 'none';
+                }
+            }
+    
+            // Function to collect form data and send it to the backend
+            document.getElementById('bookingForm9').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+    
+                // Show loading overlay when form submission starts
+                document.getElementById('loadingOverlay').style.display = 'flex';
+    
+             
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    dress: document.getElementById('Dress').value
+                };
+    
+                fetch("http://localhost:5000/book", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json', 
+    },
+    body: JSON.stringify(formData)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json(); // Only parse JSON if the response is OK
+})
+.then(data => {
+    console.log('Success:', data);
+    alert("Booking sent");
+
+    setTimeout(() => {
+        window.location.href = 'booking.html';
+    }, 2000);
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert("Error saving booking: " + error.message);
+})
+.finally(() => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+});
+
+            });
+        });
+        function showDressModal(dress) {
+        const images = {
+            dress1: 'dress1.jpg',
+            dress2: 'dress2.jpg',
+            dress3: 'dress3.jpg',
+            dress4: 'dress4.jpg'
+        };
+
+        const imageUrl = images[dress.toLowerCase()];
+        if (imageUrl) {
+            document.getElementById('dressImage').src = imageUrl;
+            document.getElementById('dressModal').style.display = 'flex';
+        }
+    }
+
+    function closeDressModal() {
+        document.getElementById('dressModal').style.display = 'none';
+        document.getElementById('dressImage').src = '';
+    }
+    </script>
+    <script>
+        const modal = document.getElementById('dressModal');
+        let isDragging = false;
+        let offsetX, offsetY;
+        
+        function getEventCoordinates(e) {
+            if (e.type.startsWith('touch')) {
+                return {
+                    x: e.touches[0].clientX,
+                    y: e.touches[0].clientY
+                };
+            } else {
+                return {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+            }
+        }
+        
+        function startDrag(e) {
+            isDragging = true;
+            const coords = getEventCoordinates(e);
+            offsetX = coords.x - modal.offsetLeft;
+            offsetY = coords.y - modal.offsetTop;
+            modal.style.transform = 'none';
+            e.preventDefault();
+        }
+        
+        function onDrag(e) {
+            if (!isDragging) return;
+            const coords = getEventCoordinates(e);
+            modal.style.left = `${coords.x - offsetX}px`;
+            modal.style.top = `${coords.y - offsetY}px`;
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+        }
+        
+        // Event listeners for mouse and touch
+        modal.addEventListener('mousedown', startDrag);
+        modal.addEventListener('touchstart', startDrag);
+        
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('touchmove', onDrag);
+        
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+        
+        // Optional: Close modal function
+        function closeDressModal() {
+            modal.style.display = 'none';
+        }
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
