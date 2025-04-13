@@ -152,19 +152,28 @@
                     <label for="Dress" class="form-label">Choose Dress</label>
                     <select id="Dress" class="form-select" onchange="showDressModal(this.value)">
                         <option value="" disabled selected>Select Dress</option>
-                        <option value="dress1">Dress 1</option>
-                        <option value="dress2">Dress 2</option>
-                        <option value="dress3">Dress 3</option>
-                        <option value="dress4">Dress 4</option>
+                        <option value="dress1">Birthday Dress</option>
+                        <option value="dress2">Wedding Dress</option>
                     </select>
                 </div>
 
-                <!-- Dress Modal -->
-                <!-- Dress Modal -->
-<div id="dressModal" class="custom-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000; cursor:move;">
-    <span onclick="closeDressModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
-    <img id="dressImage" src="" alt="Selected Dress" style="width:100%; height:auto; border-radius:10px;">
+              <!-- Dress Modal -->
+<div id="dressModal" class="custom-modal" style="display:none; position:fixed; top:50%; left:30%; transform:translate(-50%, -50%); z-index:1000; cursor:move;  border-radius:10px; ">
+    
+    <!-- Close Button -->
+    <span onclick="closeDressModal()" style="position:absolute; top:10px; right:10px; cursor:pointer; font-size:24px;">&times;</span>
+
+    <!-- Image Carousel -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
+        <button onclick="showPrevImage()" style="font-size:28px; background:none; border:none; cursor:pointer;">&#10094;</button>
+        
+        <img id="dressImage" src="" alt="Selected Dress" style="max-width:80vw; max-height:70vh; border-radius:10px;">
+
+        <button onclick="showNextImage()" style="font-size:28px; background:none; border:none; cursor:pointer;">&#10095;</button>
+    </div>
 </div>
+
+
 
                 <button type="submit" class="btn btn-primary w-100">Order Dress</button>
             </form>
@@ -253,24 +262,47 @@
 
             });
         });
-        function showDressModal(dress) {
-        const images = {
-            dress1: 'dress1.jpg',
-            dress2: 'dress2.jpg',
-            dress3: 'dress3.jpg',
-            dress4: 'dress4.jpg'
-        };
+        const dressImages = {
+        dress1: ['dress.jpg', 'dress3.jpg', 'dress4.jpg', 'dress7.jpg', 'dress8.jpg', 'dress9.jpg', 'dress910.jpg', 'dress11.jpg'],
+        dress2: ['dress1.jpg', 'dress2.jpg']
+    };
 
-        const imageUrl = images[dress.toLowerCase()];
-        if (imageUrl) {
-            document.getElementById('dressImage').src = imageUrl;
-            document.getElementById('dressModal').style.display = 'flex';
-        }
+    let currentDress = '';
+    let currentImageIndex = 0;
+
+    function showDressModal(dress) {
+        currentDress = dress.toLowerCase();
+        currentImageIndex = 0;
+
+        updateModalImage();
+        document.getElementById('dressModal').style.display = 'flex';
     }
 
     function closeDressModal() {
         document.getElementById('dressModal').style.display = 'none';
         document.getElementById('dressImage').src = '';
+    }
+
+    function updateModalImage() {
+        const images = dressImages[currentDress];
+        if (images && images.length > 0) {
+            document.getElementById('dressImage').src = images[currentImageIndex];
+        }
+    }
+
+    function showNextImage() {
+        const images = dressImages[currentDress];
+        if (images && currentImageIndex < images.length - 1) {
+            currentImageIndex++;
+            updateModalImage();
+        }
+    }
+
+    function showPrevImage() {
+        if (currentImageIndex > 0) {
+            currentImageIndex--;
+            updateModalImage();
+        }
     }
     </script>
     <script>
