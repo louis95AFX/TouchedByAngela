@@ -89,6 +89,16 @@ app.post('/subscribe', (req, res) => {
   res.json({ message: "Subscription successful!" });
 });
 
+// Get all orders from the database
+app.get('/orders', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM "Touched_by_angela"."orders"');
+      res.json({ orders: result.rows });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to fetch orders' });
+  }
+});
 
 // Endpoint to handle form submission
 app.post("/book", async (req, res) => {
