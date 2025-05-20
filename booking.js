@@ -121,12 +121,12 @@ function openPaymentModal() {
 function closePaymentModal() {
     document.getElementById('PaymentModal').style.display = "none";
 }
-window.onclick = function(event) {
-    let modal = document.getElementById('serviceModal','serviceBrazilianHairModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-}
+// window.onclick = function(event) {
+//     let modal = document.getElementById('serviceModal','serviceBrazilianHairModal');
+//     if (event.target === modal) {
+//         closeModal();
+//     }
+// }
 
 function showLengthOptions() {
     let hairstyle = document.getElementById("hairstyle").value;
