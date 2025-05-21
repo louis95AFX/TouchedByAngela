@@ -29,18 +29,25 @@ app.use(cors({
   }
 }));
 
-// PostgreSQL pool setup using environment variables for security (optional)
 // Or you can keep your current connection details here:
+// const pool = new Pool({
+//   connectionString: 'postgresql://postgres:Amalouis1!@db.dyetymjohesrlmjsxvwg.supabase.co:5432/postgres',
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
+
 const pool = new Pool({
-  database: "angela_db",
-  user: "angela_db_user",
-  password: "HRMB7R6pE0xEmAaC3vyHUtAfz1iFTdBa",
-  host: "dpg-d0m45gadbo4c73cflr30-a.oregon-postgres.render.com",
+  host: 'localhost',
+  database: 'touchedb_Angela',
+  user: 'touchedb_Angela',
+  password: 'AjZqEmyH6KvUkeTBgQym',
   port: 5432,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: false, // Since it's localhost, SSL is not needed
 });
+
+module.exports = pool;
+
 
 // Test the connection once on startup
 pool.connect()
